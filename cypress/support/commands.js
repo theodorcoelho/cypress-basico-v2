@@ -1,4 +1,4 @@
-Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function(text) {
+Cypress.Commands.add('preencheCamposObrigatorios', function(text) {
     cy.get('#firstName')
           .should('be.visible')
           .type('Theodor',{delay:0})
@@ -18,13 +18,12 @@ Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function(text) {
           .should('be.visible')
          .type(text,{delay:0})
          .should('have.value', text)
-          
-        cy.get('button[type="submit"]').click()
 })
 
-
-
-
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function(text) {
+    cy.preencheCamposObrigatorios(text)
+    cy.contains('Button','Enviar').click()
+})
 
 // ***********************************************
 // This example commands.js shows you how to
