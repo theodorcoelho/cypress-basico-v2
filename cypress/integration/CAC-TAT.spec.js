@@ -143,6 +143,17 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
         cy.contains('Button','Enviar').click()
     })
-
+    it('seleciona um produto (YouTube) por seu texto', function(){
+      //cy.preencheCamposObrigatorios(text)
+      cy.get('select').select('YouTube')
+    })
+    it('seleciona um produto (Mentoria) por seu valor (value)', function(){
+      //cy.preencheCamposObrigatorios(text)
+      cy.get('select').select('mentoria').should('have.value','mentoria')
+    })
+    it('seleciona um produto (Blog) por seu índice', function(){
+      //cy.preencheCamposObrigatorios(text)
+      cy.get('select').select(1).should('have.value','blog')
+    })
   })
   
