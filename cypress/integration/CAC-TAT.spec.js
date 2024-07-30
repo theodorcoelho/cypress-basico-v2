@@ -197,26 +197,35 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
     it('seleciona um arquivo da pasta fixtures', function(){
       cy.get('#file-upload')
+        .should('not.have.value')
         .selectFile('cypress/fixtures/example.json')
-        .then(input => {
-          //console.log(input)
-          expect(input[0].files[0].name).to.equal('example.json')
+        .should(function($input){
+          console.log($input)
+          expect($input.length).to.equal(1)
+          expect($input[0].files[0].name).to.equal('example.json')
         })
+        
+        /*      também funciona se fizer assim:
+          .then(input => {
+          console.log(input)
+          expect(input[0].files[0].name).to.equal('example.json')
+        })*/
     })
     it('seleciona um arquivo simulando um drag-and-drop', function(){
-      cy.get('#file-upload')
+      cy.get('input[type="file"]')
+        .should('not.have.value')
         .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
-        .then(input => {
-          expect(input[0].files[0].name).to.equal('example.json')
+        .should(function($input) {
+          expect($input[0].files[0].name).to.equal('example.json')
         })
     })  
-    it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
-      cy.fixture('example.json', {encoding: null}).as('exampleFile')
+    it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function() {
+      cy.fixture('example.json').as('exampleFile')
       
       cy.get('input[type="file"]#file-upload')
         .selectFile('@exampleFile')
-        .then(input => {
-          expect(input[0].files[0].name).to.equal('example.json')
+        .should(function($input) {
+          expect($input[0].files[0].name).to.equal('example.json')
         })
     })
   })
