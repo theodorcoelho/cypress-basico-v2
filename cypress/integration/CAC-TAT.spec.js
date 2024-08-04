@@ -3,11 +3,11 @@
 const text = "Sed a bibendum lacus. Pellentesque in bibendum diam. Aenean ultricies in leo non pretium. Integer eu efficitur dui. Pellentesque hendrerit interdum orci sed maximus. Proin quam quam, ultricies at enim in, tristique tincidunt nibh. Vestibulum dictum mauris quis quam aliquam dapibus. Quisque vitae felis placerat, vulputate ex sed, sagittis lectus. Integer malesuada sapien a libero elementum interdum."
 
 describe('Central de Atendimento ao Cliente TAT', function() {
-    beforeEach(() => {
+    beforeEach(() => { //arrow function, também poderia ser function()
         cy.visit('./src/index.html')
     })
     // é possível usar it.only() para rodar apenas aquele teste em específico
-    it('verifica o título da aplicação', function() {
+    it('verifica o título da aplicação', function() { // function, poderia ser usada a arrow function () =>
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
 
@@ -251,7 +251,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
       }) 
     })
-    it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+    it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', function() { // arrow function
       cy.get('.success')
         .should('not.be.visible')
         .invoke('show') // remove o elemento css display:none, fazendo aparecer a mensagem que estava escondida
@@ -266,6 +266,12 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .and('contain', 'Valide os campos obrigatórios!')
         .invoke('hide')
         .should('not.be.visible')
+    })
+    it.only('preenche a area de texto usando o comando invoke', function() {
+      const longText = Cypress._.repeat('0123456789',20)
+      cy.get('#open-text-area')
+        .invoke('val',longText)
+        .should('have.value', longText)
     })
   })
   
