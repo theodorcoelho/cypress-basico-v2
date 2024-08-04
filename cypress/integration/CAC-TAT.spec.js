@@ -32,11 +32,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           .should('be.visible')
          .type(text,{delay:0})
          .should('have.value', text)
-          
+        
+        cy.clock() 
         cy.contains('Button','Enviar').click()
 
         cy.get('.success')
           .should('be.visible')
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
     })
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function() {
         cy.get('#firstName')
@@ -56,9 +59,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           .type(text,{delay:0})
           .should('have.value',text)
 
+        cy.clock()
         cy.contains('Button','Enviar').click()
-
         cy.get('.error').should('be.visible')
+        cy.tick(3000)
+        cy.get('.error').should('not.be.visible')
 
     })
     it('campo telefone continua vazio quando preenchido com valor não-numérico', function() {
@@ -90,8 +95,11 @@ describe('Central de Atendimento ao Cliente TAT', function() {
           .should('have.value',text)
 
         cy.get('#phone-checkbox').check()
+        cy.clock()
         cy.contains('Button','Enviar').click()
         cy.get('.error').should('be.visible')
+        cy.tick(3000)
+        cy.get('.error').should('not.be.visible')
     })
     it ('preenche e limpa os campos nome, sobrenome, email e telefone', function() {
         cy.get('#firstName')
@@ -129,18 +137,22 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('have.value','')
     })
     it('exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', function() {
+        cy.clock()
         cy.contains('Button','Enviar').click()
         cy.get('.error').should('be.visible')
+        cy.tick(3000)
+        cy.get('.error').should('not.be.visible')
     })
     it('envia o formuário com sucesso usando um comando customizado', function() {
+        cy.clock()
         cy.fillMandatoryFieldsAndSubmit(text)
-        
         cy.get('.success')
           .should('be.visible')
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
     })
     it('usando contains', function() {
         cy.preencheCamposObrigatorios(text)
-
         cy.contains('Button','Enviar').click()
     })
     it('seleciona um produto (YouTube) por seu texto', function(){
@@ -236,7 +248,6 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .invoke('removeAttr', 'target')
         .click()
       cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
-    })
-    
+    }) 
   })
   
