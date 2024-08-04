@@ -292,7 +292,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         expect(body).to.include('CAC TAT')
       })
     })
-    it.only('finding a cat', function() {
+    it('finding a cat', function() {
       cy.get('#cat').invoke('show')
       cy.get('#title')
         .invoke('text','CAT TAT')
