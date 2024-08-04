@@ -280,7 +280,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       }).then((response) => {
         expect(response.status).to.equal(200)
         expect(response.statusText).to.equal('OK')
-        expect(response.body).to.include('CAC TAT')
+        expect(response.body).contains('CAC TAT')
       })
     })
     it('faz uma requisição HTTP aprendido no vídeo', function() {
@@ -291,6 +291,13 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         expect(statusText).to.equal('OK')
         expect(body).to.include('CAC TAT')
       })
+    })
+    it.only('finding a cat', function() {
+      cy.get('#cat').invoke('show')
+      cy.get('#title')
+        .invoke('text','CAT TAT')
+      cy.get('#subtitle')
+        .invoke('text', 'EU AMO GATOS')
     })
   })
   
