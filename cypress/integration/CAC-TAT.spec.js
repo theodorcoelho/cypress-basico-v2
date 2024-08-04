@@ -244,12 +244,28 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       cy.get('#privacy a').should('have.attr', 'target', '_blank')
     })
     Cypress._.times(100, function() {
-      it.only('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
+      it('acessa a página da política de privacidade removendo o target e então clicando no link', function() {
         cy.get('#privacy a')
           .invoke('removeAttr', 'target')
           .click()
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
       }) 
+    })
+    it.only('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+      cy.get('.success')
+        .should('not.be.visible')
+        .invoke('show') // remove o elemento css display:none, fazendo aparecer a mensagem que estava escondida
+        .should('be.visible')
+        .and('contain', 'Mensagem enviada com sucesso.')
+        .invoke('hide') // faz a mensagem desaparecer novamente
+        .should('not.be.visible')
+      cy.get('.error')
+        .should('not.be.visible')
+        .invoke('show')
+        .should('be.visible')
+        .and('contain', 'Valide os campos obrigatórios!')
+        .invoke('hide')
+        .should('not.be.visible')
     })
   })
   
